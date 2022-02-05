@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Matematec internet</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+	<script src="js/main.js"></script>
+</head>
+<body>
+
+	<header>
+		<a href="#inicio"><img src="assets/matematec_internet.png" class="header_logo" alt=""></a>
+		<svg onclick="menu_f()" class="menu_icon" viewBox="0 0 100 80" width="40" height="40">
+  			<rect y="0" width="100" height="20" rx="8"></rect>
+  			<rect y="30" width="100" height="20" rx="8"></rect>
+  			<rect y="60" width="100" height="20" rx="8"></rect>
+		</svg>
+		<ul id="menu" class="menu_list">
+			<li><a onclick="inicio()">Inicio</a></li>
+			<li><a onclick="servicios()">Nuestros servicios</a></li>
+			<li><a onclick="venta()">Venta de artículos y papelería</a></li>
+			<li><a onclick="horarios()">Horarios y ubicación</a></li>
+			<li><a onclick="impresiones()">Envíanos tus documentos a imprimir</a></li>
+		</ul>
+	</header>
+
+	<div class="inicio" id="inicio">
+		<div class="inicio_content">
+			<div class="space"></div>
+			<img src="assets/matematec_internet_copias.png" alt="">
+			<a onclick="servicios()" class="arrow_margin">
+				<i class="arrow"></i>
+			</a>
+		</div>
+	</div>
+
+	<div class="servicios" id="servicios">
+		
+	</div>
+
+	<script src="js/header.js"></script>
+	
+</body>
+</html>
