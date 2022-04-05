@@ -265,7 +265,7 @@ p.text.second_text {
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	margin: 2vh 0 0 0;
+	margin: 2vh 0;
 }
 
 .mail {
