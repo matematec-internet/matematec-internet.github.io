@@ -1,6 +1,7 @@
 const iconoMenu = document.querySelector('#icono-menu');
 const menu = document.querySelector('#menu');
 const logo_final = document.getElementById('logo_final');
+const maletin = document.getElementById('maletin');
 
 function menu_f(){
 	menu.classList.toggle('active_menu');
@@ -17,9 +18,8 @@ const cargarImagen = (entradas, observador) => {
 const observador = new IntersectionObserver(cargarImagen, {
 	root: null,
 	rootMargin: '0px 0px 0px 0px',
-	threshold: 1.0
+	threshold: 0.8
 });
 
-if (logo_final){
-	observador.observe(logo_final);
-}
+observador.observe(logo_final);
+observador.observe(maletin);

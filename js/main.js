@@ -24,3 +24,8 @@ function impresiones(){
 	document.getElementById('impresiones').scrollIntoView();
 	menu.classList.remove('active_menu');
 }
+
+function empleo() {
+	document.getElementById('empleo').scrollIntoView();
+	menu.classList.remove('active_menu');
+}

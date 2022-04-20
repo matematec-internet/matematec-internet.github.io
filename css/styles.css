@@ -408,6 +408,38 @@ iframe {
 	width: fit-content;
 }
 
+.empleo {
+	padding: 2vh 0;
+	background: #fff;
+}
+
+.phone {
+	background-image: linear-gradient(currentColor, currentColor);
+	background-position: 0% 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 2px;
+	transition: background-size .3s;
+}
+
+.phone:hover, .phone:focus {
+	background-size: 100% 2px;
+	transition: all 0.5s;
+}
+
+#maletin {
+	object-fit: contain;
+	min-width: 30vh;
+	max-width: 25%;
+	transition: .7s ease-in-out all;
+	opacity: 0;
+	fill: #243e6a;
+}
+
+#maletin.inside {
+	opacity: 1;
+	transform: scale(1.0) translateX(0) translateY(0);
+}
+
 footer {
   color: #fff;
   background: #c02845;
