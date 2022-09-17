@@ -262,10 +262,10 @@ p.text.second_text {
 }
 
 .mail_container {
-	width: 100%;
+	width: 95%;
 	display: flex;
 	justify-content: center;
-	margin: 2vh 0;
+	margin: 2vh 5%;
 }
 
 .mail {
