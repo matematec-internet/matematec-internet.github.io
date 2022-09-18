@@ -124,7 +124,7 @@ header > li a {
 }
 
 .logo_inicio {
-	border: 1.5px solid #000;
+	z-index: 1;
 }
 
 .space {
@@ -145,6 +145,7 @@ header > li a {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	position: relative;
 }
 
 .inicio_content img {
@@ -152,6 +153,24 @@ header > li a {
 	width: 45vh;
 	padding: 3vh 0vh;
 	object-fit: contain;
+}
+
+.foto_local {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+}
+
+.inicio_content img.foto_local_img {
+	position: absolute;
+	z-index: 0;
+	height: fit-content;
+	height: 95vh;
+	width: 95vw;
+	overflow: hidden;
+	top: -5%;
+	padding: 0;
 }
 
 .inicio, .servicios, .venta, .horarios, .impresiones {
@@ -353,7 +372,7 @@ ul.services {
 	object-fit: contain;
 }
 
-.logo_inicio, .container img {
+.container img {
 	background: url('../assets/matematec.png'), linear-gradient(to right, #fff, #fff) ;
 	background-repeat: repeat;
 }
