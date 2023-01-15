@@ -409,8 +409,11 @@ iframe {
 .croquis {
 	margin: 5vh 0 0 0;
 	box-shadow: 0 0 20px 0 rgb(0 0 0 / 30%);
-	height: 50vh;
-	width: 50vh;
+	height: 100%;
+	width: 80%;
+	max-width: 50vh;
+	max-height: 50vh;
+	object-fit: contain;
 }
 
 .hora {
