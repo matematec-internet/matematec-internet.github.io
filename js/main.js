@@ -1,31 +1,27 @@
-window.addEventListener("scroll", function(){var header = document.querySelector("header"); header.classList.toggle("sticky", window.scrollY > 0);})
+document.addEventListener('DOMContentLoaded', () => {
+	const btn = document.getElementById('mobile-menu-btn');
+	const menu = document.getElementById('mobile-menu');
+	const links = document.querySelectorAll('.mobile-link');
 
-function inicio(){
-	document.getElementById('inicio').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
+	function toggleMenu() {
+		// Toggle visibility classes
+		const isOpen = menu.classList.contains('scale-y-100');
 
-function servicios(){
-	document.getElementById('servicios').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
+		if (isOpen) {
+			menu.classList.remove('scale-y-100', 'opacity-100', 'pointer-events-auto');
+			menu.classList.add('scale-y-0', 'opacity-0', 'pointer-events-none');
+		} else {
+			menu.classList.remove('scale-y-0', 'opacity-0', 'pointer-events-none');
+			menu.classList.add('scale-y-100', 'opacity-100', 'pointer-events-auto');
+		}
+	}
 
-function venta(){
-	document.getElementById('venta').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
+	if (btn && menu) {
+		btn.addEventListener('click', toggleMenu);
 
-function horarios(){
-	document.getElementById('horarios').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
-
-function impresiones(){
-	document.getElementById('impresiones').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
-
-function empleo() {
-	document.getElementById('empleo').scrollIntoView();
-	menu.classList.remove('active_menu');
-}
+		// Close on link click
+		links.forEach(link => {
+			link.addEventListener('click', toggleMenu);
+		});
+	}
+});
