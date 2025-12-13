@@ -54,8 +54,9 @@
 				<!-- Mobile Left Search (Visible Only When Toggled) -->
 				<!-- Mobile Left Search (Visible Only When Toggled) -->
 				<!-- Mobile Left Search (Visible Only When Toggled) -->
+				<!-- Mobile/Tablet Left Search (Visible Only When Toggled) -->
 				<div id="mobile-search-left"
-					class="hidden md:hidden flex-grow items-center transition-all duration-300">
+					class="hidden xl:hidden flex-grow items-center transition-all duration-300">
 					<form onsubmit="event.preventDefault();" class="w-full">
 						<input type="text" id="mobile-search-input"
 							class="w-full bg-gray-50 text-gray-800 rounded-full px-4 py-1.5 text-base border-none focus:outline-none focus:ring-1 focus:ring-brand-600 placeholder-gray-400 theme-focus"
@@ -64,7 +65,9 @@
 					</form>
 				</div>
 
-				<div class="hidden md:flex space-x-8 items-center absolute left-1/2 transform -translate-x-1/2">
+
+				<div id="desktop-links"
+					class="hidden lg:flex space-x-8 items-center absolute left-1/2 transform -translate-x-1/2">
 					<a href="#inicio" class="text-gray-600 hover:text-brand-600 font-medium transition">Inicio</a>
 					<a href="#catalogo" class="text-gray-600 hover:text-brand-600 font-medium transition">Catálogo</a>
 					<a href="#servicios" class="text-gray-600 hover:text-brand-600 font-medium transition">Servicios</a>
@@ -78,30 +81,30 @@
 					<div id="search-container"
 						class="transition-all duration-300 ease-in-out motion-reduce:transition-none">
 						<div class="relative flex items-center justify-end">
-							<!-- Desktop Input -->
+							<!-- Desktop Input (Visible on large screens) -->
 							<input type="text" id="desktop-search-input"
-								class="hidden md:block w-48 lg:w-64 pl-10 pr-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600 transition-all text-sm theme-focus"
+								class="hidden xl:block w-48 xl:w-64 pl-10 pr-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600 transition-all text-sm theme-focus"
 								placeholder="Buscar..." autocomplete="off" autocorrect="off" autocapitalize="off"
 								spellcheck="false">
 							<span
-								class="material-symbols-outlined absolute left-3 text-gray-400 text-lg hidden md:block pointer-events-none">search</span>
+								class="material-symbols-outlined absolute left-3 text-gray-400 text-lg hidden xl:block pointer-events-none">search</span>
 
-							<!-- Mobile Toggle -->
+							<!-- Mobile/Tablet Toggle (Visible when Input is hidden) -->
 							<button id="mobile-search-toggle" type="button"
-								class="md:hidden p-2 text-gray-500 hover:text-brand-600 transition rounded-full hover:bg-gray-100">
+								class="xl:hidden p-2 text-gray-500 hover:text-brand-600 transition rounded-full hover:bg-gray-100">
 								<span class="material-symbols-outlined">search</span>
 							</button>
 						</div>
 					</div>
 
-					<!-- Close Search Button (Mobile Only) -->
+					<!-- Close Search Button (Mobile/Tablet Only) -->
 					<button id="close-search-btn" type="button"
-						class="hidden md:hidden p-2 text-gray-500 hover:text-red-500 transition rounded-full z-10">
+						class="hidden xl:hidden p-2 text-gray-500 hover:text-red-500 transition rounded-full z-10">
 						<span class="material-symbols-outlined">close</span>
 					</button>
 
 					<!-- Mobile menu button -->
-					<button id="mobile-menu-btn" type="button" class="md:hidden p-2 text-gray-500 hover:text-brand-600">
+					<button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-gray-500 hover:text-brand-600">
 						<span class="material-symbols-outlined">menu</span>
 					</button>
 				</div>
@@ -109,7 +112,7 @@
 		</div>
 		<!-- Mobile Menu -->
 		<div id="mobile-menu"
-			class="absolute top-16 left-0 w-full bg-white z-40 transform origin-top scale-y-0 opacity-0 transition-all duration-300 ease-in-out motion-reduce:transition-none shadow-lg border-t border-gray-100 pointer-events-none md:hidden">
+			class="absolute top-16 left-0 w-full bg-white z-40 transform origin-top scale-y-0 opacity-0 transition-all duration-300 ease-in-out motion-reduce:transition-none shadow-lg border-t border-gray-100 pointer-events-none lg:hidden">
 			<div class="px-4 py-6 space-y-2">
 				<a href="#inicio"
 					class="mobile-link block px-4 py-3 rounded-lg text-base font-medium text-gray-600 hover:text-brand-600 hover:bg-brand-50 transition-colors">Inicio</a>
@@ -174,7 +177,7 @@
 	</div>
 
 	<!-- Main Content Area -->
-	<div id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+	<div id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-24">
 
 		<!-- Filter/Categories Header -->
 		<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
@@ -508,7 +511,8 @@
 				<div>
 					<div class="flex items-center gap-2 mb-6">
 						<!-- Logo without filters, adding white background for visibility on red -->
-						<img src="assets/matematec_internet.png" alt="Matematec Internet" class="h-12 w-auto">
+						<img src="assets/matematec_internet.png" alt="Matematec Internet"
+							class="h-12 w-auto object-contain">
 					</div>
 					<p class="text-brand-100 text-sm leading-relaxed mb-6">
 						Tu centro de soluciones en impresión y tecnología.

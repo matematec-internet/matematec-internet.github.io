@@ -435,6 +435,8 @@ const products = [
 
 // State
 let currentFilter = 'all';
+let isExpanded = false;
+const MOBILE_LIMIT = 4;
 
 // DOM Elements
 const grid = document.getElementById('product-grid');
@@ -443,6 +445,8 @@ const grid = document.getElementById('product-grid');
 function init() {
     if (grid) {
         renderProducts(products);
+        setupLoadMoreButton();
+        updateMobileVisibility();
     }
 }
 
@@ -504,11 +508,14 @@ function renderProducts(items) {
     noResults.className = 'col-span-full text-center py-12 text-gray-500 hidden';
     noResults.innerText = 'No se encontraron productos en esta categoría.';
     grid.appendChild(noResults);
+
+    updateMobileVisibility();
 }
 
 // Filtering
 function filterProducts(category) {
     currentFilter = category;
+    isExpanded = false; // Reset expansion on filter change
 
     // State classes
     const activeClasses = ['bg-brand-600', 'text-white'];
@@ -554,6 +561,8 @@ function filterProducts(category) {
             noResults.classList.add('hidden');
         }
     }
+
+    updateMobileVisibility();
 }
 
 // Search Logic
@@ -569,29 +578,78 @@ if (mobileToggle) {
     mobileToggle.addEventListener('click', (e) => {
         if (e) e.preventDefault();
 
-        // Expand Search Mode
-        // Hide Logo (Push effect/collapse)
-        if (logoContainer) {
-            logoContainer.classList.add('w-0', 'opacity-0', 'mr-0');
-            logoContainer.classList.remove('mr-2');
+        // 1. Determine if this is mobile (< lg) or tablet/desktop (> lg but < xl)
+        // Note: Tailwind breakpoints: lg=1000px, xl=1280px (default)
+        // Unified Logic based on Width
+        const width = window.innerWidth;
+        const isPhone = width < 768; // Mobile
+
+        if (!isPhone) {
+            // TABLET & DESKTOP (> 768px)
+            // Strategy: Use the Right-Aligned Desktop Input (not the full width one)
+
+            // 1. Hide Desktop Links if we are in that 1000px-1280px range where they exist but space is tight
+            if (width >= 1000) {
+                const desktopLinks = document.getElementById('desktop-links');
+                if (desktopLinks) desktopLinks.style.display = 'none';
+            }
+
+            // 2. Show Desktop Input
+            if (desktopInput) {
+                desktopInput.classList.remove('hidden');
+                desktopInput.classList.remove('xl:block');
+                desktopInput.classList.add('block');
+                // Add margin to separate from Close button/Rest of UI as requested
+                desktopInput.classList.add('mr-3');
+
+                // Show Inner Icon
+                const icon = desktopInput.nextElementSibling;
+                if (icon && icon.classList.contains('material-symbols-outlined')) {
+                    icon.classList.remove('hidden');
+                    icon.classList.remove('xl:block');
+                }
+                setTimeout(() => desktopInput.focus(), 300);
+            }
+
+            // 3. Ensure Mobile Left is Hidden
+            const mobileSearchLeft = document.getElementById('mobile-search-left');
+            if (mobileSearchLeft) {
+                mobileSearchLeft.classList.add('hidden');
+                mobileSearchLeft.classList.remove('flex');
+            }
+
+            // 4. Manage Toggle/Close Buttons
+            mobileToggle.classList.add('hidden');
+            if (closeSearchBtn) closeSearchBtn.classList.remove('hidden', 'xl:hidden');
+
+        } else {
+            // PHONE (< 768px)
+            // Strategy: Use Left Mobile Bar (Full Width)
+
+            // Show expanding input container (Left)
+            if (mobileSearchLeft) {
+                mobileSearchLeft.classList.remove('hidden', 'xl:hidden');
+                mobileSearchLeft.classList.add('flex');
+            }
+
+            if (logoContainer) {
+                logoContainer.classList.add('w-0', 'opacity-0', 'mr-0');
+                logoContainer.classList.remove('mr-2');
+            }
+
+            // Ensure Phone width classes
+            const mInput = document.getElementById('mobile-search-input');
+            if (mInput) {
+                mInput.classList.add('w-full');
+                mInput.classList.remove('w-80');
+            }
+
+            // Hide toggle button specific to mobile
+            mobileToggle.classList.add('hidden');
+
+            // Show Close Button
+            if (closeSearchBtn) closeSearchBtn.classList.remove('hidden', 'xl:hidden');
         }
-
-        // Show expanding input container (Left)
-        // Note: mobile-search-bar is now mobile-search-left in HTML, but we need to fetch it
-        const mobileSearchLeft = document.getElementById('mobile-search-left');
-        if (mobileSearchLeft) {
-            mobileSearchLeft.classList.remove('hidden');
-            mobileSearchLeft.classList.add('flex');
-        }
-
-        // Hide toggle button specific to mobile
-        mobileToggle.classList.add('hidden');
-
-        // Show Close Button
-        closeSearchBtn.classList.remove('hidden');
-
-        // Focus Input
-        if (mobileInput) setTimeout(() => mobileInput.focus(), 300); // Wait for transition
     });
 }
 
@@ -601,10 +659,23 @@ if (closeSearchBtn) {
 }
 
 function closeMobileSearch() {
-    // Show Logo
-    if (logoContainer) {
-        logoContainer.classList.remove('w-0', 'opacity-0', 'mr-0');
-        // logoContainer.classList.add('mr-2'); 
+
+    const isDesktopMode = window.matchMedia('(min-width: 1000px)').matches;
+
+    if (isDesktopMode) {
+        // Restore Desktop Links
+        const desktopLinks = document.getElementById('desktop-links');
+        if (desktopLinks) desktopLinks.style.display = ''; // Restore to CSS default
+
+        if (logoContainer) logoContainer.classList.remove('hidden');
+
+    } else {
+        // Show Logo Mobile
+        if (logoContainer) {
+            logoContainer.classList.remove('w-0', 'opacity-0', 'mr-0');
+            logoContainer.classList.remove('hidden'); // Ensure hidden is removed from desktop mode
+            // logoContainer.classList.add('mr-2'); 
+        }
     }
 
     // Hide expanding input
@@ -612,17 +683,42 @@ function closeMobileSearch() {
     if (mobileSearchLeft) {
         mobileSearchLeft.classList.add('hidden');
         mobileSearchLeft.classList.remove('flex');
+        // Re-add xl:hidden to ensure it stays hidden on large resizing
+        mobileSearchLeft.classList.add('xl:hidden');
     }
 
     // Show toggle button
-    mobileToggle.classList.remove('hidden');
+    if (mobileToggle) mobileToggle.classList.remove('hidden');
 
     // Hide Close Button
-    closeSearchBtn.classList.add('hidden');
+    if (closeSearchBtn) closeSearchBtn.classList.add('hidden');
 
-    // Optional: Clear search
-    // mobileInput.value = '';
-    // performSearch('');
+    // Reset Input Width Classes (Clean up)
+    const mInput = document.getElementById('mobile-search-input');
+    if (mInput) {
+        mInput.classList.add('w-full');
+        mInput.classList.remove('w-80');
+    }
+
+    // Reset Desktop Input (Hide it if we are not in XL mode)
+    if (desktopInput) {
+        // If window is < 1280 (or whatever XL is), we should hide it.
+        // Actually, restore original classes
+        if (window.innerWidth < 1280) {
+            desktopInput.classList.add('hidden');
+            desktopInput.classList.remove('block');
+            desktopInput.classList.add('xl:block'); // Restore original
+
+            const icon = desktopInput.nextElementSibling;
+            if (icon && icon.classList.contains('material-symbols-outlined')) {
+                icon.classList.add('hidden');
+                icon.classList.add('xl:block');
+            }
+
+            // Clean up margin
+            desktopInput.classList.remove('mr-3');
+        }
+    }
 }
 
 // Search Inputs Listener
@@ -653,36 +749,38 @@ function closeMobileSearch() {
     }
 });
 
-// Handle Resize Events (Reset state on desktop)
+// Handle Resize Events
 window.addEventListener('resize', () => {
-    if (window.innerWidth >= 768) {
-        // We are on desktop
-        // Ensure Logo is visible (remove manual override)
-        if (logoContainer) {
-            logoContainer.classList.remove('w-0', 'opacity-0', 'mr-0');
-            logoContainer.style.marginRight = '';
-        }
+    // Note: We use 1000px as our "lg" breakpoint
+    // and default xl is 1280px.
 
-        // Ensure Close button is hidden
-        if (closeSearchBtn) closeSearchBtn.classList.add('hidden');
-        if (mobileToggle) mobileToggle.classList.add('hidden');
-
-        // Ensure mobile search input container is hidden
-        const mobileSearchLeft = document.getElementById('mobile-search-left');
-        if (mobileSearchLeft) {
-            mobileSearchLeft.classList.add('hidden');
-            mobileSearchLeft.classList.remove('flex');
-        }
-    } else {
-        // We are on mobile
-        // Restore Toggle visibility if close button isn't active
-        if (mobileToggle && closeSearchBtn.classList.contains('hidden')) {
-            mobileToggle.classList.remove('hidden');
-        }
+    // Force Reset of Logo and Search State when crossing major breakpoints
+    // If we cross 1000px, we might be stuck in "Mobile Expanded" or "Desktop Expanded".
+    // Best is to close search to avoid conflict.
+    if (window.innerWidth >= 1000) {
+        // Switch to Desktop state handling
+        // If mobile search was open (logo hidden), we need to revert.
+        // Calling closeMobileSearch() is safe here.
+        closeMobileSearch();
     }
+
+    // Reset Expansion state when switching to mobile view to ensure limit is applied
+    if (window.innerWidth < 640) {
+        // If we just resized to mobile, maybe we want to reset expansion?
+        // User said: "se despliega toda la lista ... en vez de cortarse"
+        // This suggests we should enforce the limit.
+        // We typically don't reset 'isExpanded' automatically unless desired, 
+        // but the user complaint implies they want the "cut" view by default on resize.
+        // However, if user *clicked* view more, maybe they want to keep it?
+        // The complaint says "se despliega toda la lista", implying the mechanism FAILED.
+        // It failed because I removed updateMobileVisibility() call below!
+    }
+
+    updateMobileVisibility();
 });
 
 function performSearch(query) {
+    isExpanded = false; // Reset expansion on search
     const cards = grid.querySelectorAll('.group[data-category]');
     let visibleCount = 0;
 
@@ -716,6 +814,7 @@ function performSearch(query) {
     });
 
     // Update No Results Message
+    // Update No Results Message
     const noResults = document.getElementById('no-results-msg');
     if (noResults) {
         if (visibleCount === 0) {
@@ -723,6 +822,86 @@ function performSearch(query) {
             noResults.innerText = `No se encontraron resultados para "${query}"`;
         } else {
             noResults.classList.add('hidden');
+        }
+    }
+
+    // Auto-scroll to catalog results if user is not viewing them
+    // Auto-scroll to catalog results if user is not viewing them
+    const catalogSection = document.getElementById('catalogo');
+    if (query.length > 0 && catalogSection) {
+        const rect = catalogSection.getBoundingClientRect();
+        // Scroll if top is > 150px (below header) OR if we are way past it (negative top)
+        // Actually, logic: if rect.top is NOT near the header (e.g. 64px - 100px range).
+        // If we are searching, we want to see results.
+        // Simple heuristic: If top is > 120 (we are above it) OR top < -500 (we scrolled way past it)
+        if (rect.top > 120 || rect.top < -50) {
+            catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    updateMobileVisibility();
+}
+
+// Mobile View Limiter Logic
+function setupLoadMoreButton() {
+    // Check if exists to avoid duplicates
+    if (document.getElementById('load-more-container')) return;
+
+    const container = document.createElement('div');
+    container.id = 'load-more-container';
+    container.className = 'w-full flex justify-center mt-8 hidden md:hidden'; // default hidden
+    container.innerHTML = `
+        <button id="load-more-trigger" class="group px-8 py-3 bg-brand-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:bg-brand-700 transition-all duration-300 flex items-center gap-2 transform active:scale-95">
+            <span>Ver catálogo completo</span>
+            <span class="material-symbols-outlined text-xl group-hover:translate-y-0.5 transition-transform">expand_more</span>
+        </button>
+    `;
+
+    // Insert after the grid
+    grid.parentNode.insertBefore(container, grid.nextSibling);
+
+    // Event Listener
+    document.getElementById('load-more-trigger').addEventListener('click', () => {
+        isExpanded = true;
+        updateMobileVisibility();
+    });
+}
+
+function updateMobileVisibility() {
+    const btnContainer = document.getElementById('load-more-container');
+    const cards = Array.from(grid.querySelectorAll('.group[data-category]')); // Select only product cards
+
+    // 1. Reset all manual display overrides first (clean slate)
+    cards.forEach(card => card.style.display = '');
+
+    // 2. Desktop Check (>= 640px for sm breakpoint)
+    if (window.innerWidth >= 640) {
+        if (btnContainer) btnContainer.classList.add('hidden');
+        return;
+    }
+
+    // 3. Mobile Logic
+    // Get currently visible matches (those not hidden by filter/search)
+    const visibleMatches = cards.filter(card => !card.classList.contains('hidden'));
+
+    if (isExpanded) {
+        // Show all matches, hide button
+        if (btnContainer) btnContainer.classList.add('hidden');
+    } else {
+        // Limit to MOBILE_LIMIT
+        visibleMatches.forEach((card, index) => {
+            if (index >= MOBILE_LIMIT) {
+                card.style.display = 'none';
+            }
+        });
+
+        // Toggle Button Visibility
+        if (btnContainer) {
+            if (visibleMatches.length > MOBILE_LIMIT) {
+                btnContainer.classList.remove('hidden');
+            } else {
+                btnContainer.classList.add('hidden');
+            }
         }
     }
 }

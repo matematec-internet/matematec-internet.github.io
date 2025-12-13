@@ -15,6 +15,9 @@ module.exports = {
                     800: '#722F37', /* Deeper wine */
                     900: '#60242a',
                 }
+            },
+            screens: {
+                'lg': '1000px',
             }
         },
     },
