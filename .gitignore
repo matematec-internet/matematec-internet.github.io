@@ -1,0 +1,11 @@
+# Ignorar dependencias (Esto eliminará 2600+ archivos de tu lista)
+node_modules/
+
+# Ignorar archivos de sistema (Basura de Mac/Windows)
+.DS_Store
+Thumbs.db
+
+# Archivos de log (Opcional pero recomendado)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

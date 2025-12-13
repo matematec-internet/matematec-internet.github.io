@@ -1,0 +1,25 @@
+{
+  "name": "matematec_internet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./css/src.css -o ./css/styles.css",
+    "watch:css": "npx tailwindcss -i ./css/src.css -o ./css/styles.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@matematec:matematec-internet/matematec-internet.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6"
+  }
+}
