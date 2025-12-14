@@ -448,6 +448,8 @@ function init() {
         setupLoadMoreButton();
         updateMobileVisibility();
     }
+    // Initialize Navbar/Search State based on current width to prevent visual bugs on load
+    closeMobileSearch();
 }
 
 
@@ -574,80 +576,65 @@ const mobileSearchBar = document.getElementById('mobile-search-bar');
 const logoContainer = document.getElementById('logo-container');
 
 // Mobile Search Toggle
+const menuBtn = document.getElementById('mobile-menu-btn');
+
 if (mobileToggle) {
     mobileToggle.addEventListener('click', (e) => {
         if (e) e.preventDefault();
 
-        // 1. Determine if this is mobile (< lg) or tablet/desktop (> lg but < xl)
-        // Note: Tailwind breakpoints: lg=1000px, xl=1280px (default)
-        // Unified Logic based on Width
         const width = window.innerWidth;
-        const isPhone = width < 768; // Mobile
+        const isPhone = width < 768;
 
         if (!isPhone) {
             // TABLET & DESKTOP (> 768px)
-            // Strategy: Use the Right-Aligned Desktop Input (not the full width one)
-
-            // 1. Hide Desktop Links if we are in that 1000px-1280px range where they exist but space is tight
             if (width >= 1000) {
                 const desktopLinks = document.getElementById('desktop-links');
-                if (desktopLinks) desktopLinks.style.display = 'none';
+                if (desktopLinks) desktopLinks.classList.add('hidden');
             }
 
-            // 2. Show Desktop Input
             if (desktopInput) {
                 desktopInput.classList.remove('hidden');
                 desktopInput.classList.remove('xl:block');
                 desktopInput.classList.add('block');
-                // Add margin to separate from Close button/Rest of UI as requested
                 desktopInput.classList.add('mr-3');
 
-                // Show Inner Icon
                 const icon = desktopInput.nextElementSibling;
                 if (icon && icon.classList.contains('material-symbols-outlined')) {
                     icon.classList.remove('hidden');
                     icon.classList.remove('xl:block');
                 }
-                setTimeout(() => desktopInput.focus(), 300);
+                setTimeout(() => desktopInput.focus(), 100);
             }
 
-            // 3. Ensure Mobile Left is Hidden
             const mobileSearchLeft = document.getElementById('mobile-search-left');
             if (mobileSearchLeft) {
                 mobileSearchLeft.classList.add('hidden');
                 mobileSearchLeft.classList.remove('flex');
             }
 
-            // 4. Manage Toggle/Close Buttons
             mobileToggle.classList.add('hidden');
             if (closeSearchBtn) closeSearchBtn.classList.remove('hidden', 'xl:hidden');
 
         } else {
             // PHONE (< 768px)
-            // Strategy: Use Left Mobile Bar (Full Width)
-
-            // Show expanding input container (Left)
+            // PHONE (< 768px)
+            const mobileSearchLeft = document.getElementById('mobile-search-left');
             if (mobileSearchLeft) {
                 mobileSearchLeft.classList.remove('hidden', 'xl:hidden');
                 mobileSearchLeft.classList.add('flex');
             }
 
-            if (logoContainer) {
-                logoContainer.classList.add('w-0', 'opacity-0', 'mr-0');
-                logoContainer.classList.remove('mr-2');
-            }
+            if (logoContainer) logoContainer.classList.add('hidden');
+            if (menuBtn) menuBtn.classList.add('hidden');
 
-            // Ensure Phone width classes
             const mInput = document.getElementById('mobile-search-input');
             if (mInput) {
                 mInput.classList.add('w-full');
                 mInput.classList.remove('w-80');
+                setTimeout(() => mInput.focus(), 100);
             }
 
-            // Hide toggle button specific to mobile
             mobileToggle.classList.add('hidden');
-
-            // Show Close Button
             if (closeSearchBtn) closeSearchBtn.classList.remove('hidden', 'xl:hidden');
         }
     });
@@ -659,63 +646,44 @@ if (closeSearchBtn) {
 }
 
 function closeMobileSearch() {
-
     const isDesktopMode = window.matchMedia('(min-width: 1000px)').matches;
 
     if (isDesktopMode) {
-        // Restore Desktop Links
         const desktopLinks = document.getElementById('desktop-links');
-        if (desktopLinks) desktopLinks.style.display = ''; // Restore to CSS default
-
+        if (desktopLinks) desktopLinks.classList.remove('hidden');
         if (logoContainer) logoContainer.classList.remove('hidden');
-
     } else {
-        // Show Logo Mobile
-        if (logoContainer) {
-            logoContainer.classList.remove('w-0', 'opacity-0', 'mr-0');
-            logoContainer.classList.remove('hidden'); // Ensure hidden is removed from desktop mode
-            // logoContainer.classList.add('mr-2'); 
-        }
+        if (logoContainer) logoContainer.classList.remove('hidden');
+        if (menuBtn) menuBtn.classList.remove('hidden');
     }
 
-    // Hide expanding input
     const mobileSearchLeft = document.getElementById('mobile-search-left');
     if (mobileSearchLeft) {
         mobileSearchLeft.classList.add('hidden');
         mobileSearchLeft.classList.remove('flex');
-        // Re-add xl:hidden to ensure it stays hidden on large resizing
         mobileSearchLeft.classList.add('xl:hidden');
     }
 
-    // Show toggle button
     if (mobileToggle) mobileToggle.classList.remove('hidden');
-
-    // Hide Close Button
     if (closeSearchBtn) closeSearchBtn.classList.add('hidden');
 
-    // Reset Input Width Classes (Clean up)
     const mInput = document.getElementById('mobile-search-input');
     if (mInput) {
         mInput.classList.add('w-full');
-        mInput.classList.remove('w-80');
+        // mInput.value = ''; // Optional: clear on close?
     }
 
-    // Reset Desktop Input (Hide it if we are not in XL mode)
     if (desktopInput) {
-        // If window is < 1280 (or whatever XL is), we should hide it.
-        // Actually, restore original classes
         if (window.innerWidth < 1280) {
             desktopInput.classList.add('hidden');
             desktopInput.classList.remove('block');
-            desktopInput.classList.add('xl:block'); // Restore original
+            desktopInput.classList.add('xl:block');
 
             const icon = desktopInput.nextElementSibling;
             if (icon && icon.classList.contains('material-symbols-outlined')) {
                 icon.classList.add('hidden');
                 icon.classList.add('xl:block');
             }
-
-            // Clean up margin
             desktopInput.classList.remove('mr-3');
         }
     }
@@ -734,18 +702,6 @@ function closeMobileSearch() {
             performSearch(query);
         });
 
-        // Auto-close sticky behavior for mobile
-        if (input === mobileInput) {
-            input.addEventListener('blur', () => {
-                // Determine if we should close.
-                // UX: If user scrolls or taps away, we assume they are done "entering" the query.
-                // We add a small delay to prevent fighting with immediate UI interactions (like clicking the X button specifically)
-                // and to filter out momentary blurs.
-                setTimeout(() => {
-                    closeMobileSearch();
-                }, 200);
-            });
-        }
     }
 });
 
