@@ -40,8 +40,6 @@
 
 <body class="bg-gray-50 text-gray-800 antialiased">
 
-	<!-- Navbar -->
-	<!-- Navbar -->
 	<nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 shadow-sm">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex justify-between items-center h-16">
@@ -52,11 +50,6 @@
 						<img src="assets/matematec_internet.png" alt="Logo Matematec Internet" class="h-8">
 					</a>
 				</div>
-
-				<!-- Mobile Left Search (Visible Only When Toggled) -->
-				<!-- Mobile Left Search (Visible Only When Toggled) -->
-				<!-- Mobile Left Search (Visible Only When Toggled) -->
-				<!-- Mobile/Tablet Left Search (Visible Only When Toggled) -->
 				<div id="mobile-search-left"
 					class="hidden xl:hidden flex-grow items-center transition-all duration-300">
 					<form onsubmit="event.preventDefault();" class="w-full">
@@ -77,13 +70,10 @@
 					<a href="#ubicacion" class="text-gray-600 hover:text-brand-600 font-medium transition">Ubicación</a>
 				</div>
 
-				<!-- Search Container -->
 				<div class="flex items-center gap-2 md:gap-4 justify-end flex-1 md:flex-none">
-					<!-- Inline Search -->
 					<div id="search-container"
 						class="transition-all duration-300 ease-in-out motion-reduce:transition-none">
 						<div class="relative flex items-center justify-end">
-							<!-- Desktop Input (Visible on large screens) -->
 							<input type="text" id="desktop-search-input"
 								class="hidden xl:block w-48 xl:w-64 pl-10 pr-4 py-1.5 rounded-full border border-gray-200 bg-gray-50 focus:bg-white focus:outline-none focus:border-brand-600 focus:ring-1 focus:ring-brand-600 transition-all text-sm theme-focus"
 								placeholder="Buscar..." autocomplete="off" autocorrect="off" autocapitalize="off"
@@ -91,7 +81,6 @@
 							<span
 								class="material-symbols-outlined absolute left-3 text-gray-400 text-lg hidden xl:block pointer-events-none">search</span>
 
-							<!-- Mobile/Tablet Toggle (Visible when Input is hidden) -->
 							<button id="mobile-search-toggle" type="button"
 								class="xl:hidden p-2 text-gray-500 hover:text-brand-600 transition rounded-full hover:bg-gray-100">
 								<span class="material-symbols-outlined">search</span>
@@ -99,20 +88,16 @@
 						</div>
 					</div>
 
-					<!-- Close Search Button (Mobile/Tablet Only) -->
 					<button id="close-search-btn" type="button"
 						class="hidden xl:hidden p-2 text-gray-500 hover:text-red-500 transition rounded-full z-10">
 						<span class="material-symbols-outlined">close</span>
 					</button>
-
-					<!-- Mobile menu button -->
 					<button id="mobile-menu-btn" type="button" class="lg:hidden p-2 text-gray-500 hover:text-brand-600">
 						<span class="material-symbols-outlined">menu</span>
 					</button>
 				</div>
 			</div>
 		</div>
-		<!-- Mobile Menu -->
 		<div id="mobile-menu"
 			class="absolute top-16 left-0 w-full bg-white z-40 transform origin-top scale-y-0 opacity-0 transition-all duration-300 ease-in-out motion-reduce:transition-none shadow-lg border-t border-gray-100 pointer-events-none lg:hidden max-h-[calc(100vh-4rem)] overflow-y-auto pb-4">
 			<div class="px-4 py-2 space-y-1">
@@ -130,14 +115,9 @@
 		</div>
 	</nav>
 
-	<!-- Hero Section -->
-	<!-- Hero Section -->
-	<!-- Hero Section -->
-	<!-- Hero Section -->
 	<div id="inicio" class="relative bg-white overflow-hidden pt-16">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="lg:flex lg:items-center lg:gap-8 lg:justify-between py-8 lg:py-16">
-				<!-- Content Side -->
 				<div class="lg:w-1/2">
 					<main class="mx-auto lg:mx-0 max-w-2xl text-center lg:text-left">
 						<h1 class="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
@@ -166,7 +146,6 @@
 					</main>
 				</div>
 
-				<!-- Image Side -->
 				<div class="lg:w-1/2 mt-8 lg:mt-0 relative group">
 					<div
 						class="hero-img-container relative w-full h-auto aspect-[4/3] rounded-2xl overflow-hidden sm:py-6 py-2">
@@ -178,17 +157,14 @@
 		</div>
 	</div>
 
-	<!-- Main Content Area -->
 	<div id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-24">
 
-		<!-- Filter/Categories Header -->
 		<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
 			<div>
 				<h2 class="text-2xl font-bold text-gray-900">Catálogo de Productos</h2>
 				<p class="text-gray-500 text-sm mt-1">Encuentra herramientas para cada necesidad.</p>
 			</div>
 
-			<!-- Category Pills -->
 			<div class="flex space-x-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0" id="category-container">
 				<button onclick="filterProducts('all')"
 					class="category-btn shrink-0 active px-4 py-2 rounded-full text-sm font-medium bg-brand-600 text-white transition-colors whitespace-nowrap">
@@ -217,7 +193,6 @@
 			</div>
 		</div>
 
-		<!-- Product Grid -->
 		<div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[50vh]">
 			<!-- Products rendered by catalog.js -->
 		</div>
@@ -233,7 +208,6 @@
 
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-				<!-- Internet -->
 				<div
 					class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:border-brand-100 transition-all duration-300">
 					<div class="flex items-center gap-4 mb-4">
@@ -251,7 +225,6 @@
 					</div>
 				</div>
 
-				<!-- Copias B/N -->
 				<div
 					class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:border-brand-100 transition-all duration-300">
 					<div class="flex items-center gap-4 mb-4">
@@ -276,7 +249,6 @@
 					</div>
 				</div>
 
-				<!-- Color -->
 				<div
 					class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:border-brand-100 transition-all duration-300">
 					<div class="flex items-center gap-4 mb-4">
@@ -305,7 +277,6 @@
 					</div>
 				</div>
 
-				<!-- Escaneos & Trámites -->
 				<div
 					class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:border-brand-100 transition-all duration-300">
 					<div class="flex items-center gap-4 mb-4">
@@ -332,7 +303,6 @@
 					</div>
 				</div>
 
-				<!-- Otros -->
 				<div
 					class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg hover:border-brand-100 transition-all duration-300 md:col-span-2">
 					<div class="flex items-center gap-4 mb-4">
@@ -366,7 +336,6 @@
 		</div>
 	</section>
 
-	<!-- Features Section (Trust Signals) -->
 	<div class="bg-brand-50 border-t border-brand-100 py-12 mt-8">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
@@ -385,7 +354,6 @@
 		</div>
 	</div>
 
-	<!-- Send Documents Section -->
 	<section id="impresion" class="bg-white py-16 border-t border-gray-200">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="bg-gray-50 rounded-2xl p-8 md:p-12 shadow-sm border border-gray-100">
@@ -398,7 +366,6 @@
 					</p>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-						<!-- Email Card -->
 						<div
 							class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-brand-300 transition-colors group">
 							<span
@@ -410,7 +377,6 @@
 							</a>
 						</div>
 
-						<!-- Phone Card -->
 						<div
 							class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:border-brand-300 transition-colors group flex flex-col items-center">
 							<svg class="w-9 h-9 text-brand-600 mb-3 group-hover:scale-110 transition-transform fill-current"
@@ -436,16 +402,12 @@
 		</div>
 	</section>
 
-	<!-- Location Section -->
 	<section id="ubicacion" class="bg-white py-16 pb-24">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-
-				<!-- Info Column -->
 				<div>
 					<h2 class="text-3xl font-bold text-gray-900 mb-8">Ubicación y Horarios</h2>
 
-					<!-- Hours -->
 					<div class="mb-8 p-6 bg-brand-50 rounded-xl border border-brand-100">
 						<div class="flex items-start gap-4">
 							<div class="p-3 bg-white text-brand-600 rounded-lg shrink-0 shadow-sm">
@@ -460,7 +422,6 @@
 						</div>
 					</div>
 
-					<!-- Address Info -->
 					<div class="mapa-accesible p-6 bg-brand-50 rounded-xl border border-brand-100">
 						<div class="flex items-start gap-4">
 							<div class="p-3 bg-white text-brand-600 rounded-lg shrink-0 shadow-sm">
@@ -484,7 +445,6 @@
 					</div>
 				</div>
 
-				<!-- Map Column -->
 				<div class="w-full h-full min-h-[400px]">
 					<div class="mapa-contenedor shadow-lg ring-1 ring-gray-200">
 						<iframe
@@ -505,14 +465,11 @@
 		</div>
 	</section>
 
-	<!-- Footer -->
 	<footer class="bg-brand-700 text-white pt-16 pb-8 border-t border-brand-800">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-				<!-- Brand -->
 				<div>
 					<div class="flex items-center gap-2 mb-6">
-						<!-- Logo without filters, adding white background for visibility on red -->
 						<a href="#inicio" aria-label="Ir al inicio" class="flex items-center gap-2">
 							<img src="assets/matematec_internet.png" alt="Matematec Internet Logo footer"
 								class="h-12 w-auto object-contain">
@@ -524,7 +481,6 @@
 					</p>
 				</div>
 
-				<!-- Quick Links -->
 				<div>
 					<h3 class="text-lg font-bold mb-6 text-white">Enlaces Rápidos</h3>
 					<ul class="space-y-3 text-sm">
@@ -547,7 +503,6 @@
 					</ul>
 				</div>
 
-				<!-- Contact -->
 				<div>
 					<h3 class="text-lg font-bold mb-6 text-white">Contacto</h3>
 					<ul class="space-y-4 text-sm">
@@ -573,7 +528,6 @@
 					</ul>
 				</div>
 
-				<!-- Business Hours -->
 				<div>
 					<h3 class="text-lg font-bold mb-6 text-white">Horario</h3>
 					<ul class="space-y-3 text-sm text-brand-100">
@@ -593,7 +547,6 @@
 				</div>
 			</div>
 
-			<!-- Divider -->
 			<div class="border-t border-brand-800 pt-8 mt-8">
 				<div class="flex flex-col md:flex-row justify-between items-center gap-4">
 					<p class="text-brand-200 text-sm text-center md:text-left">
@@ -602,7 +555,6 @@
 						derechos reservados.
 					</p>
 
-					<!-- Developer Credit -->
 					<div class="flex items-center gap-2 group">
 						<span class="text-xs text-brand-200 group-hover:text-white transition-colors">Desarrollado
 							por</span>

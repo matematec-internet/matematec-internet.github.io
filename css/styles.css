@@ -976,10 +976,10 @@ video {
   margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
@@ -1201,11 +1201,6 @@ video {
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
 }
 
 .py-8 {
@@ -1597,14 +1592,8 @@ video {
   }
 }
 
-/* Mobile Landscape fix for menu height */
-
-@media (max-height: 700px) {
-  #mobile-menu {
-    max-height: calc(100vh - 5rem) !important;
-    overflow-y: scroll !important;
-    padding-bottom: 2rem !important;
-  }
+.hero-img-container {
+  background: linear-gradient(to bottom, #fadbd8 0%, #fde8e8 100%);
 }
 
 .hover\:border-brand-100:hover {
